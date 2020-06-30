@@ -26,6 +26,4 @@ Y el coeficiente de person como se asumió que cada una de las densidades margin
  Luego se graficaron cada una de las densidades marginales tanto de X y de Y, y la densidad conjunta en 3d
  
  
-"(Aquí: cómo hacer una gráfica de una variable aleatoria múltiple bivariada)\n",
-    "\n",
-    "$$f_{X,Y}(x, y)$$"
+
