@@ -37,7 +37,8 @@ matriz = [
     [0.00466,0.00404,0.00313,0.00318,0.00195,0.0043,0.00437	,0.00666,0.0103,0.01257	,0.01372,0.01399,0.00934,0.00784,0.00416,0.00298,0.00292,0.00323,0.0032	,0.00334,0.00238],
     [0.00277,0.00293,0.00373,0.00315,0.00509,0.00259,0.00512,0.00727,0.01273,0.01635,0.0176	,0.015,0.01172,0.00766,0.00644,0.00498,0.00359	,0.00396,0.00411,0.00149,0.00321],
     [0.00425,0.00405,0.00389,0.00315,0.00198,0.00418,0.00526,0.00645,0.00944,0.0125	,0.01554,0.01179,0.00905,0.00792,0.00482,0.00462,0.00296,0.00112,0.00238,0.00271,0.00366],
-   [0.00361	,0.00461,0.0,0.00333,0.00158,0.00517,0.00364,0.00267,0.00303,0.00543,0.00341,0.00585,0.0043	,0.00318,0.00488,0.00426,0.00255,0.004,0.00351,0.00388,0.00397],
+    [0.0023,0.00294,0.00217,0.00533,0.00328,0.00532,0.00596,0.00453,0.00395,0.00736,0.00752,0.00873,0.00635,0.00634,0.00205,0.00363,0.00528,0.00367,0.00467,0.00356,0.0034],
+    [0.00361,0.00461,0.0,0.00333,0.00158,0.00517,0.00364,0.00267,0.00303,0.00543,0.00341,0.00585,0.0043	,0.00318,0.00488,0.00426,0.00255,0.004,0.00351,0.00388,0.00397],
     [0.00277,0.00257,0.00327,0.00428,0.00498,0.00214,0.00292,0.00218,0.00302,0.00436,0.00276,0.00121,0.0035	,0.00121,0.004,0.00265,0.00234,0.00145,0.00358,0.0019,0.00268],
     [0.00336,0.0029	,0.0012	,0.00108,0.00243,0.00227,0.00562,0.00247,0.00363,0.00437,0.00272,0.00387,0.00385,0.00388,0.00257,0.00406,0.00393,0.00244,0.00333,0.00235,0.00286]
 ]
@@ -58,7 +59,7 @@ print('Vector de valores de cada una de las filas de las Xs =',nueva_fila)
 suma_xs = np.sum(nueva_fila)
 print('Valor total de las xs =',suma_xs)
 #x = [1,2,3,4,5,6,7,8,9,10] #número de muestras
-x = np.linspace(5,15,10)
+x = np.linspace(5,15,Filas)
 
 #Suma de las columnas
 nueva_columna = []
@@ -70,37 +71,17 @@ print('vector de valores de cada una de las columnas de las ys = ',nueva_columna
 suma_ys = np.sum(nueva_columna)
 print('Valor total de las ys =',suma_ys)
 #y = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21] #número de muestras
-y = np.linspace(5,25,21)
+y = np.linspace(5,25,Columnas)
 
-
-#Encontrando los parámetros de la mejor curva de ajuste de la función marginal de xs
-mu1 = 0.027031758655329845
-sigma1 = 0.090172
-#función la función marginal de xs
-def norm1(x,mu1,sigma1):
-    return  1/(np.sqrt(2*np.pi*sigma1**2)) * np.exp(-(x-mu1)) ** 2/(2*sigma1**2)
-
-xs1 = np.linspace(5,15,10)
-ys1 = norm1(xs1,mu1,sigma1)
-
-#Encontrando los parámetros de la mejor curva de ajuste de la función marginal de ys
-mu2 = 0.015403387353115333
-sigma2 = 0.04293904761904762
-#función la función marginal de xs
-def norm2(x,mu2,sigma2):
-    return  1/(np.sqrt(2*np.pi*sigma2**2)) * np.exp(-(x-mu2)) ** 2/(2*sigma2**2)
-
-xs2 = np.linspace(5,25,21)
-ys2 = norm2(xs2,mu2,sigma2)
 
 #función del modelo gaussiano
 
 def gaussiana(x,mu,sigma):
-    return  1/(np.sqrt(2*np.pi*sigma**2)) * np.exp(-(x-mu)) ** 2/(2*sigma**2)
+    return  (1/(np.sqrt(2*np.pi*sigma**2))) * np.exp(-(x-mu)**2 / (2*sigma**2))
 
-param1,_ = curve_fit(gaussiana,xs1,ys1)
+param1,_ = curve_fit(gaussiana,x,suma_xs)
 print('Parámetros de la mejor curva de ajuste de las Xs es =',param1)
-param2,_ = curve_fit(gaussiana,xs2,ys2)
+param2,_ = curve_fit(gaussiana,y,nueva_columna)
 print('Parámetros de la mejor curva de ajuste de las Ys',param2)
 
 
@@ -109,6 +90,13 @@ print('Parámetros de la mejor curva de ajuste de las Ys',param2)
 ¿cuál es entonces la expresión de la función de densidad conjunta que modela los datos?
 '''
 print('\n--- 2 ---\n')
+
+#importación de datos mediante pandas
+data = pd.read_csv('xyp.csv',header=0)
+p_xyp = data['p']
+x_xyp = data['x']
+y_xyp =  data['y']
+
 
 fx_fy = suma_xs * suma_ys
 print('La expresión de la función de densidad conjunta asumiendo independencia que modela los datos es =',fx_fy)
@@ -120,40 +108,30 @@ para los datos y explicar su significado.
 '''
 print('\n--- 3 ---\n')
 
+
 #importación de datos mediante pandas
 data = pd.read_csv('xyp.csv',header=0)
-#print(data)
-#print(data['p'])
 
-#Sumatoria de los valores de la probabilidad de xy
-p_xy = data['p'].sum()
-xy_p = p_xy
-print('El valor de XY para la correlación es =',p_xy)
-
-#Correlación de XY
-correlacion_xy = p_xy * (suma_xs * suma_ys)
-print('Correlación de XY es =',correlacion_xy)
-
-#Obtención de la media de X y Y
-
-c,d = stats.norm.fit(nueva_fila) # obtencion de los paramertros de las xs
-print('El valor de c es =',c)
-print('El valor de la media  de Xs es =',d)
-x_media = d
-e,f = stats.norm.fit(nueva_columna) # obtencion de los paramertros de las ys
-print('El valor de e es =',e)
-print('El valor de la media de Ys es =',f)
-y_media = f
-
+#Sumatoria de los valores de la correlacion
+p_xyp = data['p']
+x_xyp = data['x']
+y_xyp =  data['y']
+xy_correlacion = np.sum(x_xyp * y_xyp * p_xyp)
+print('El valor de la correlación es =',xy_correlacion)
 
 #covarianza de XY
-covarianza_xy = (suma_xs - x_media)*(suma_ys - y_media)* suma_ys * suma_xs
-print('La covarianza de XY es =',covarianza_xy)
+x_media = 10.00000007
+y_media = 15.07946091
+x_xypmedia = data['x'] - x_media
+y_xypmedia = data['y'] - y_media
+covarianza_xyp = np.sum(x_xypmedia * y_xypmedia * data['p'])
+print('La covarianza es =',covarianza_xyp)
+
 
 #Coeficiente de Pearson:
 
-# como tanto de la densidad marginal de X y de Y significa que no es posible
-# determinar algún sentido de covariación. Sin embargo, no significa que no exista una relación no lineal entre las variables.
+coef_pearson = np.sum((np.sum(x_xypmedia * y_xypmedia)) / (np.sqrt(x_xypmedia * y_xypmedia)))
+print('El coeficiente de pearson es =', coef_pearson)
 
 
 '''
@@ -171,27 +149,12 @@ plt.ylabel('Amplitud')
 plt.savefig('DensidadMarginalX.png')
 
 
-
+plt.figure()
 plt.plot(y,nueva_columna)
 plt.title('Representación de la densidad marginal de Y sin ajustar')
 plt.xlabel('Número de muestras para las Y=21')
 plt.ylabel('Amplitud')
 plt.savefig('DensidadMarginalY.png')
 
-
-#Grafica 3d
-
-#sigma = 2.82329103
-#mu = 0.27913812
-#X = np.linspace(5,15,10)
-#Y = np.linspace(5,25,21)
-#X,Y = np.meshgrid(X,Y)
-#Z = 1/(np.sqrt(2*np.pi*sigma**2)) * np.exp(-(X*Y-mu)) ** 2/(2*sigma**2)
-#ax = fig.add_subplot(111, projection ='3d')
-#ax.plot_wireframe(X,Y,Z, rstride=2, cstride=2,cmap='Blues')
-#ax.set_xlabel('X')
-#ax.set_xlabel('Y')
-#ax.set_xlabel('Z')
-#plt.show()
 
 
