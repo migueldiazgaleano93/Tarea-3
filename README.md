@@ -19,9 +19,10 @@ Lo que se hizo fue encontrar el resultado de la suma de las probabilidades de XY
 y se procedió a sumar cada una de ellas. Luego se aplicó la formula de correlación vista en clases para obner la correlación de las densidades marinales.
 Para la covarianza lo que se hizo fue con los vectores de las densidades marginales definidos se le sacó la media de cada uno ellos, ya que se conocía que cada una tenía la forma 
 de una normal, eso mediante la obtención de los parámetros, luego se procedió a aplicar la formula de covarianza vista en clase.
-Y el coeficiente de person como se asumió que cada una de las densidades marginales eran independientes, lo que implica: como tanto de la densidad marginal de X y de Y significa que no es posible
-# determinar algún sentido de covariación. Sin embargo, no significa que no exista una relación no lineal entre las variables.
+Y el coeficiente de person como se asumió que cada una de las densidades marginales eran independientes, lo que implica: como tanto de la densidad marginal de X y de Y significa que no es posible determinar algún sentido de covariación. Sin embargo, no significa que no exista una relación no lineal entre las variables.
 
  Graficar las funciones de densidad marginales (2D), la función de densidad conjunta (3D).
  
  Luego se graficaron cada una de las densidades marginales tanto de X y de Y, y la densidad conjunta en 3d
+ 
+ 
