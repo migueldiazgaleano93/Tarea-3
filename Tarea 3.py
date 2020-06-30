@@ -199,5 +199,3 @@ Z1 = np.reshape(Z2, -1)
 ax = plt.axes(projection='3d')
 ax.plot_wireframe(X2, Y2, Z2, color='r')
 plt.savefig('3D Desidad marginal de Y.png')
-
-
