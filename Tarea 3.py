@@ -4,9 +4,9 @@ from fitter import Fitter
 import matplotlib.pyplot as plt
 import pandas as pd
 from scipy.optimize import curve_fit
-from matplotlib import cm
-#from pylab import
-from mpl_toolkits.mplot3d.axes3d import Axes3D
+#matplotlib.pyplot
+#mpl_toolkits.mplot3d
+from mpl_toolkits import mplot3d
 
 import csv
 
@@ -156,5 +156,48 @@ plt.xlabel('Número de muestras para las Y=21')
 plt.ylabel('Amplitud')
 plt.savefig('DensidadMarginalY.png')
 
+
+#Graficas de 3d para las densidades marginales
+
+plt.figure()
+plt.rcParams["figure.figsize"] = 5, 10
+ax = plt.axes(projection='3d')
+sigma = 2.10960155
+def LoG(x, y, sigma):
+    temp = (x ** 2 + y ** 2) / (2 * sigma ** 2)
+    return -1 / (np.pi * sigma ** 4) * (1 - temp) * np.exp(-temp)
+
+N = 25
+half_N = N // 2
+X2, Y2 = np.meshgrid(range(N), range(N))
+Z2 = -LoG(X2 - half_N, Y2 - half_N, sigma=2.10960155)
+X1 = np.reshape(X2, -1)
+Y1 = np.reshape(Y2, -1)
+Z1 = np.reshape(Z2, -1)
+ax = plt.axes(projection='3d')
+ax.plot_wireframe(X2, Y2, Z2, color='r')
+plt.savefig('3D Desidad marginal de X.png')
+
+
+
+
+plt.figure()
+plt.rcParams["figure.figsize"] = 10, 25
+ax = plt.axes(projection='3d')
+sigma = 6.02693775
+def LoG(x, y, sigma):
+    temp = (x ** 2 + y ** 2) / (2 * sigma ** 2)
+    return -1 / (np.pi * sigma ** 4) * (1 - temp) * np.exp(-temp)
+
+N = 25
+half_N = N // 2
+X2, Y2 = np.meshgrid(range(N), range(N))
+Z2 = -LoG(X2 - half_N, Y2 - half_N, sigma=6.02693775)
+X1 = np.reshape(X2, -1)
+Y1 = np.reshape(Y2, -1)
+Z1 = np.reshape(Z2, -1)
+ax = plt.axes(projection='3d')
+ax.plot_wireframe(X2, Y2, Z2, color='r')
+plt.savefig('3D Desidad marginal de Y.png')
 
 
